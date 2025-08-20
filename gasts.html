@@ -9,7 +9,7 @@
 </head>
 <body>
   <br><br><br><br>
-
+  <img id="crownImage" alt="">
   <img id="myImage" alt="">
   <p id="timeMessage"></p>
 
@@ -17,7 +17,8 @@
     function updateImage() {
       const timeMessage = document.getElementById("timeMessage"); 
       const img = document.getElementById("myImage");
-      const now = new Date();
+      const img = document.getElementById("crownImage");
+ const now = new Date();
       const hour = now.getHours();
       const day = now.getDay();
 
@@ -71,7 +72,7 @@
           timeMessage.textContent = "Evening mood!";
           textBlink(true);
         } else {
-          img.src = 'images/aquarium3.gif';
+          img.src = 'transparent.png';
           timeMessage.textContent = "Night reflections!";
           textBlink(false);
         }
@@ -80,7 +81,17 @@
 
     window.onload = updateImage;
     setInterval(updateImage, 3600000);
-  </script>
+  
+
+</script>
+
+<script>
+//Get our img element by using document.getElementById
+var img = document.getElementById("crownImage");
+
+//Set the src property of our element to the new image URL
+img.src = 'images/crown2.png';
+</script>
 </body>
 </html>
 
