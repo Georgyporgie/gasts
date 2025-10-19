@@ -65,7 +65,7 @@ async function updateImage() {
       }
       djActive = true;
     } else {
-      img.src = "images/transparent2.png";
+      img.src = "images/aquarium.png";
       timeMessage.textContent = "Good night!";
     }
   } else {
@@ -77,7 +77,7 @@ async function updateImage() {
       img.src = "images/transparent.png";
       timeMessage.textContent = "Afternoon vibes!";
     } else if (hour >= 17 && hour < 23) {
-      img.src = "images/transparent.png";
+      img.src = "images/aquarium.png";
       timeMessage.textContent = "Evening mood!";
     } else {
       img.src = "images/transparent.png";
@@ -95,6 +95,7 @@ setInterval(updateImage, 300000); // every 5 minutes
 
 </body>
 </html>
+
 
 
 
