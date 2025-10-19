@@ -57,11 +57,11 @@ async function updateImage() {
     } else if (hour >= 17 && hour < 23) {
       // Miss Monique slot, but tied to sunset
       if (now < sunset) {
-        img.src = "images/miss monique outside.gif";
-        timeMessage.textContent = "☀️ Miss Monique outside!";
+        img.src = "images/Miss Monique2.gif";
+        timeMessage.textContent = "☀️ Miss Monique Live!";
       } else {
-        img.src = "images/miss monique inside.gif";
-        timeMessage.textContent = "🌙 Miss Monique inside!";
+        img.src = "images/Lovely Miss Monique.gif";
+        timeMessage.textContent = "🌙 Lovely Miss Monique!";
       }
       djActive = true;
     } else {
@@ -95,5 +95,6 @@ setInterval(updateImage, 300000); // every 5 minutes
 
 </body>
 </html>
+
 
 
