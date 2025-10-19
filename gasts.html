@@ -71,7 +71,7 @@ async function updateImage() {
   } else {
     // Weekday fallback
     if (hour >= 7 && hour < 12) {
-      img.src = "images/transparent.png";
+      img.src = "images/aquarium.gif";
       timeMessage.textContent = "Good morning!";
     } else if (hour >= 12 && hour < 17) {
       img.src = "images/transparent.png";
@@ -80,7 +80,7 @@ async function updateImage() {
       img.src = "images/transparent.png";
       timeMessage.textContent = "Evening mood!";
     } else {
-      img.src = "images/aquarium3.gif";
+      img.src = "images/transparent.png";
       timeMessage.textContent = "Night reflections!";
     }
   }
@@ -95,6 +95,7 @@ setInterval(updateImage, 300000); // every 5 minutes
 
 </body>
 </html>
+
 
 
 
