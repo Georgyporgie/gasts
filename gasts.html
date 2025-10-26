@@ -50,6 +50,9 @@ async function updateImage() {
   let djActive = false;
 
   if (isWeekend) {
+   if  (hour >= 12 && hour < 14) {
+       img.src = "images/aquarium.png";
+      timeMessage.textContent = "Good Day!";
     if (hour >= 14 && hour < 17) {
       img.src = "images/DJ S.gif";
       timeMessage.textContent = "DJ S live set!";
@@ -95,6 +98,7 @@ setInterval(updateImage, 300000); // every 5 minutes
 
 </body>
 </html>
+
 
 
 
