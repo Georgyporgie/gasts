@@ -49,28 +49,31 @@ async function updateImage() {
 
   let djActive = false;
 
-  if (isWeekend) {
-   if  (hour >= 12 && hour < 14) {
-       img.src = "images/aquarium.png";
-      timeMessage.textContent = "Good Day!";
-    if (hour >= 14 && hour < 17) {
-      img.src = "images/DJ S.gif";
-      timeMessage.textContent = "DJ S live set!";
-      djActive = true;
-    } else if (hour >= 17 && hour < 23) {
-      // Miss Monique slot, but tied to sunset
-      if (now < sunset) {
-        img.src = "images/Miss Monique2.gif";
-        timeMessage.textContent = "☀️ Miss Monique Live!";
-      } else {
-        img.src = "images/Lovely Miss Monique.gif";
-        timeMessage.textContent = "🌙 DJ Sapphire Live!";
-      }
-      djActive = true;
+if (isWeekend) {
+  if (hour >= 12 && hour < 14) {
+    img.src = "images/aquarium.png";
+    timeMessage.textContent = "Good Day!";
+    djActive = false;
+  } else if (hour >= 14 && hour < 17) {
+    img.src = "images/DJ S.gif";
+    timeMessage.textContent = "DJ S live set!";
+    djActive = true;
+  } else if (hour >= 17 && hour < 23) {
+    // Miss Monique slot, but tied to sunset
+    if (now < sunset) {
+      img.src = "images/Miss Monique2.gif";
+      timeMessage.textContent = "☀️ Miss Monique Live!";
     } else {
-      img.src = "images/aquarium.png";
-      timeMessage.textContent = "Good night!";
+      img.src = "images/Lovely Miss Monique.gif";
+      timeMessage.textContent = "🌙 DJ Sapphire Live!";
     }
+    djActive = true;
+  } else {
+    img.src = "images/aquarium.png";
+    timeMessage.textContent = "Good night!";
+    djActive = false;
+  }
+
   } else {
     // Weekday fallback
     if (hour >= 7 && hour < 12) {
@@ -98,6 +101,7 @@ setInterval(updateImage, 300000); // every 5 minutes
 
 </body>
 </html>
+
 
 
 
