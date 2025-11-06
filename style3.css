@@ -91,7 +91,7 @@
   align-items: center;
   gap: 10px;
   padding: 8px 16px;
-  background-color: #654321;/* light sand tone */
+  background-color: #4B3621;/* light sand tone */
   border-bottom: 2px solid #D2B48C; /* slightly darker sand accent */
   box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* subtle depth */;
 }
@@ -104,6 +104,7 @@
 #clock {
   display: block;
 }
+
 
 
 
