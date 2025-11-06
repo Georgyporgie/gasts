@@ -99,14 +99,11 @@
   margin: 20px;          /* optional spacing from edges */
 }
 
-#kroonImage {
-  height: 50px;          /* adjust to match clock size */
-  width: auto;
-}
 
 #clock {
   display: block;
 }
+
 
 
 
