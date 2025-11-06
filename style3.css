@@ -86,7 +86,7 @@
 
 
 
-#kroonImage  {  width: 70px;  height: 30px;filter: brightness(100%) saturate(105%) contrast(110%)opacity (75%);display: block; margin: auto auto auto auto; z-index:-600;
+#kroonImage  {  width: 70px;  height: 30px;filter: brightness(100%) saturate(105%) contrast(110%)opacity (75%);display: block; margin: auto auto auto auto; z-index:-200;
 }
 
 
@@ -103,6 +103,7 @@
 #clock {
   display: block;
 }
+
 
 
 
