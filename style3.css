@@ -86,23 +86,26 @@
 
 
 
-#kroonImage  {  width: 70px;  height: 30px;filter: brightness(100%) saturate(105%) contrast(110%)opacity (75%);display: block; margin: auto auto auto auto; z-index:-200;
-}
-
-
-
-
 .top-bar {
   display: flex;
-  align-items: center;   /* vertically center lamp + clock */
-  gap: 10px;             /* space between them */
-  margin: 20px;          /* optional spacing from edges */
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background-color: #F5DEB3; /* light sand tone */
+  border-bottom: 2px solid #D2B48C; /* slightly darker sand accent */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2); /* subtle depth */
 }
 
+#kroonImage {
+  height: 30px;
+  width: auto;
+}
 
 #clock {
   display: block;
 }
+
+
 
 
 
