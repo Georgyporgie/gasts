@@ -98,9 +98,81 @@ if (isWeekend) {
 window.addEventListener("load", updateImage);
 setInterval(updateImage, 300000); // every 5 minutes
 </script>
+<canvas id="clock" width="80" height="80"></canvas>
+
+<script>
+const canvas = document.getElementById("clock");
+const ctx = canvas.getContext("2d");
+const radius = canvas.width / 2;
+ctx.translate(radius, radius); // move origin to center
+
+function drawClock() {
+  ctx.clearRect(-radius, -radius, canvas.width, canvas.height);
+
+  // Face
+  ctx.beginPath();
+  ctx.arc(0, 0, radius - 2, 0, 2 * Math.PI);
+  ctx.fillStyle = "#111";
+  ctx.fill();
+  ctx.strokeStyle = "#0ff";
+  ctx.lineWidth = 2; // thinner stroke for small size
+  ctx.stroke();
+
+  // Numbers
+  ctx.fillStyle = "#0ff";
+  ctx.font = `${radius * 0.25}px Arial`; // scale font size
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  for (let num = 1; num <= 12; num++) {
+    let angle = (num * Math.PI) / 6;
+    ctx.rotate(angle);
+    ctx.translate(0, -radius * 0.75);
+    ctx.rotate(-angle);
+    ctx.fillText(num.toString(), 0, 0);
+    ctx.rotate(angle);
+    ctx.translate(0, radius * 0.75);
+    ctx.rotate(-angle);
+  }
+
+  // Hands
+  const now = new Date();
+  let hour = now.getHours() % 12;
+  let minute = now.getMinutes();
+  let second = now.getSeconds();
+
+  // Hour hand
+  drawHand((hour + minute / 60) * Math.PI / 6, radius * 0.5, 3, "#f0f");
+
+  // Minute hand
+  drawHand((minute + second / 60) * Math.PI / 30, radius * 0.7, 2, "#0f0");
+
+  // Second hand
+  drawHand(second * Math.PI / 30, radius * 0.85, 1, "#ff0");
+}
+
+function drawHand(angle, length, width, color) {
+  ctx.beginPath();
+  ctx.lineWidth = width;
+  ctx.lineCap = "round";
+  ctx.strokeStyle = color;
+  ctx.moveTo(0, 0);
+  ctx.rotate(angle);
+  ctx.lineTo(0, -length);
+  ctx.stroke();
+  ctx.rotate(-angle);
+}
+
+function update() {
+  drawClock();
+  requestAnimationFrame(update);
+}
+
+update();
+</script>
 
 </body>
 </html>
+
 
 
 
