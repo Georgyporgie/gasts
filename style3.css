@@ -11,7 +11,32 @@
   text-align: center;
   overflow: hidden;
   white-space: nowrap;
+
+
+
+
+  background: linear-gradient(to right, #4B3621, #5C4033); /* wood strip harmony */
+  border-radius: 8px;
+  border: 1px solid #2F1B0C;
 }
+
+#marquee span {
+  font-style: italic;
+  font-size: 15px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #FFD700;              /* golden ticker text */
+  text-shadow: 0 0 4px #000;   /* glow for readability */
+}
+@keyframes glowPulse {
+  0%, 100% { text-shadow: 0 0 4px #FFD700; }
+  50% { text-shadow: 0 0 12px #FFA500; }
+}
+#marquee span {
+  animation: marquee 8s linear infinite, glowPulse 2s ease-in-out infinite;
+}
+
+
+
 
 #timeMessage  {  
  font-family: sans-serif;   font-size: 20px;  font-style: italic; font-weight: bold; margin-left: 110px; text-decoration:underline #FF0026;
@@ -69,6 +94,7 @@
 #clock {
   display: block;
 }
+
 
 
 
