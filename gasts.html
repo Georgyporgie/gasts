@@ -65,16 +65,16 @@ if (isWeekend) {
     djActive = false;
   } else if (hour >= 14 && hour < 17) {
     img.src = "images/DJ S.gif";
-    timeMessage.textContent = "DJ S live set!";
+    timeMessage.textContent = "";
     djActive = true;
   } else if (hour >= 17 && hour < 23) {
     // Miss Monique slot, but tied to sunset
     if (now < sunset) {
       img.src = "images/Miss Monique2.gif";
-      timeMessage.textContent = "☀️ Miss Monique Live!";
+      timeMessage.textContent = "";
     } else {
       img.src = "images/Lovely Miss Monique.gif";
-      timeMessage.textContent = " DJ Sapphire Live!";
+      timeMessage.textContent = "";
     }
     djActive = true;
   } else {
@@ -181,6 +181,7 @@ update();
 
 </body>
 </html>
+
 
 
 
