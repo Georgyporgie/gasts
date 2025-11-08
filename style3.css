@@ -14,14 +14,19 @@
   overflow: hidden;
   white-space: nowrap;
 }
-#marquee span {
-  display: inline-block; font-style: italic;
-  font-size: 15px;font-family: Arial ,Helvetica,sans-serif;
-  position: relative; color:#050202;
-  left: 100%;background-color: #FFCC99;
-  animation: marquee 8s linear infinite;
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
 
+#marquee span {
+  font-family: 'Rubik Moonrocks', cursive;
+  font-size: 18px;
+  color: #FFD700;
+  animation: marquee 8s linear infinite;
+  text-shadow: 2px 2px 4px #ff69b4;
+  background: linear-gradient(to right, #ff8c00, #ff69b4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
+
 
 
 
@@ -109,6 +114,7 @@
 #clock {
   display: block;
 }
+
 
 
 
