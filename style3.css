@@ -1,17 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
 
-#myImage {
-  filter: brightness(100%) saturate(100%) contrast(100%);
-  opacity: 0.75;
-  width: 235px;
-  height: 145px;
-  margin-right: -105px;
-  display: block;
-  margin: auto;
-  border: solid #555555 3px;
-  z-index: 200;
-  border-radius: 50px;
-}
+#myImage  {    filter:brightness(100%) saturation(100%) contrast(100%) opacity(75%);width: 235px; height: 145px; margin-right: -105px; display: block; margin: auto auto auto auto ; border: solid #555555 3px; z-index: 200; border-radius: 50px;
+
+    
+          }
 
 #marquee {
   display: block;
@@ -108,6 +100,7 @@
 #clock {
   display: block;
 }
+
 
 
 
