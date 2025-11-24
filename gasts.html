@@ -259,69 +259,110 @@
   </script>
 
 <script>
-    // --- Analog clock ---
-    const canvas = document.getElementById("clock");
-    const ctx = canvas.getContext("2d");
-    const radius = canvas.width / 2;
-    ctx.translate(radius, radius);
+  const stars = [];
 
-    function drawClock() {
-      ctx.clearRect(-radius, -radius, canvas.width, canvas.height);
-
-      ctx.beginPath();
-      ctx.arc(0, 0, radius - 2, 0, 2 * Math.PI);
-      ctx.fillStyle = "#111";
-      ctx.fill();
-      ctx.strokeStyle = "#0ff";
-      ctx.lineWidth = 2;
-      ctx.stroke();
-
-      ctx.fillStyle = "#0ff";
-      ctx.font = `${radius * 0.25}px Arial`;
-      ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      for (let num = 1; num <= 12; num++) {
-        let angle = (num * Math.PI) / 6;
-        ctx.rotate(angle);
-        ctx.translate(0, -radius * 0.75);
-        ctx.rotate(-angle);
-        ctx.fillText(num.toString(), 0, 0);
-        ctx.rotate(angle);
-        ctx.translate(0, radius * 0.75);
-        ctx.rotate(-angle);
-      }
-
-      const now = new Date();
-      let hour = now.getHours() % 12;
-      let minute = now.getMinutes();
-      let second = now.getSeconds();
-
-      drawHand((hour + minute / 60) * Math.PI / 6, radius * 0.5, 3, "#f0f");
-      drawHand((minute + second / 60) * Math.PI / 30, radius * 0.7, 2, "#0f0");
-      drawHand(second * Math.PI / 30, radius * 0.85, 1, "#ff0");
+  function drawStar(x, y, r, color) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.moveTo(x, y - r);
+    for (let i = 0; i < 5; i++) {
+      ctx.rotate(Math.PI / 5);
+      ctx.lineTo(x, y - r * 0.5);
+      ctx.rotate(Math.PI / 5);
+      ctx.lineTo(x, y - r);
     }
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
 
-    function drawHand(angle, length, width, color) {
-      ctx.beginPath();
-      ctx.lineWidth = width;
-      ctx.lineCap = "round";
-      ctx.strokeStyle = color;
-      ctx.moveTo(0, 0);
+  function updateStars() {
+    stars.forEach(star => {
+      star.x += star.vx;
+      star.y += star.vy;
+      star.life -= 1;
+    });
+    // remove dead stars
+    for (let i = stars.length - 1; i >= 0; i--) {
+      if (stars[i].life <= 0) stars.splice(i, 1);
+    }
+  }
+
+  function drawStars() {
+    stars.forEach(star => {
+      drawStar(star.x, star.y, star.size, star.color);
+    });
+  }
+
+  function checkQuarter(now) {
+    if (now.getSeconds() === 0 && now.getMinutes() % 15 === 0) {
+      // eject a star
+      const angle = Math.random() * 2 * Math.PI;
+      stars.push({
+        x: 0,
+        y: 0,
+        vx: Math.cos(angle) * 2,
+        vy: Math.sin(angle) * 2,
+        size: 5,
+        color: "#ff0",
+        life: 100
+      });
+    }
+  }
+
+  function drawClock() {
+    ctx.clearRect(-radius, -radius, canvas.width, canvas.height);
+
+    // clock face + hands
+    ctx.beginPath();
+    ctx.arc(0, 0, radius - 2, 0, 2 * Math.PI);
+    ctx.fillStyle = "#111";
+    ctx.fill();
+    ctx.strokeStyle = "#0ff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // numbers
+    ctx.fillStyle = "#0ff";
+    ctx.font = `${radius * 0.25}px Arial`;
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    for (let num = 1; num <= 12; num++) {
+      let angle = (num * Math.PI) / 6;
       ctx.rotate(angle);
-      ctx.lineTo(0, -length);
-      ctx.stroke();
+      ctx.translate(0, -radius * 0.75);
+      ctx.rotate(-angle);
+      ctx.fillText(num.toString(), 0, 0);
+      ctx.rotate(angle);
+      ctx.translate(0, radius * 0.75);
       ctx.rotate(-angle);
     }
 
-    function updateClock() {
-      drawClock();
-      requestAnimationFrame(updateClock);
-    }
-    updateClock();
-  </script>
+    const now = new Date();
+    let hour = now.getHours() % 12;
+    let minute = now.getMinutes();
+    let second = now.getSeconds();
+
+    drawHand((hour + minute / 60) * Math.PI / 6, radius * 0.5, 3, "#f0f");
+    drawHand((minute + second / 60) * Math.PI / 30, radius * 0.7, 2, "#0f0");
+    drawHand(second * Math.PI / 30, radius * 0.85, 1, "#ff0");
+
+    // stars
+    updateStars();
+    drawStars();
+
+    // check quarter
+    checkQuarter(now);
+  }
+</script>
+
 
 </body>
 </html>
+
 
 
 
