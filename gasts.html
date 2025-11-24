@@ -337,6 +337,69 @@
       updateClock();
     }
   </script>
+<script>
+  const stars = [];
+
+  function drawStar(x, y, r, color) {
+    ctx.save();
+    ctx.beginPath();
+    ctx.fillStyle = color;
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1;
+    ctx.moveTo(x, y - r);
+    for (let i = 0; i < 5; i++) {
+      ctx.rotate(Math.PI / 5);
+      ctx.lineTo(x, y - r * 0.5);
+      ctx.rotate(Math.PI / 5);
+      ctx.lineTo(x, y - r);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function updateStars() {
+    stars.forEach(star => {
+      star.x += star.vx;
+      star.y += star.vy;
+      star.life -= 1;
+    });
+    // remove dead stars
+    for (let i = stars.length - 1; i >= 0; i--) {
+      if (stars[i].life <= 0) stars.splice(i, 1);
+    }
+  }
+
+  function drawStars() {
+    stars.forEach(star => {
+      drawStar(star.x, star.y, star.size, star.color);
+    });
+  }
+
+  function checkQuarter(now) {
+    if (now.getSeconds() === 0 && now.getMinutes() % 15 === 0) {
+      // eject a star
+      const angle = Math.random() * 2 * Math.PI;
+      stars.push({
+        x: 0,
+        y: 0,
+        vx: Math.cos(angle) * 2,
+        vy: Math.sin(angle) * 2,
+        size: 5,
+        color: "#ff0",
+        life: 100
+      });
+    }
+  }
+
+  
+    updateStars();
+    drawStars();
+
+    // check quarter
+    checkQuarter(now);
+  }
+</script>
 
 </body>
 </html>
