@@ -123,9 +123,8 @@
       <li data-start="3" data-end="12"><strong>3.00 am – 12.00 pm</strong>: Latest Disco hits Of The Eighties</li>
       <li data-start="12" data-end="14"><strong>12.00 – 14.00</strong>: Latest Hits Of The Dance Area</li>
       <li data-start="14" data-end="16"><strong>14.00 – 16.00</strong>: Special-show!</li>
-      <li data-start="16" data-end="19"><strong>16.00 – 19.00</strong>:Latest Hits Of The Dance Area</li>
+      <li data-start="16" data-end="19"><strong>16.00 – 19.00</strong>: Latest Hits Of The Dance Area</li>
       <li data-start="19" data-end="21"><strong>19.00 – 21.00</strong>: Come See The Eighties Disco!</li>
-      
       <li data-start="21" data-end="3"><strong>21.00 – 3.00 am</strong>: Latest Hits Of The Dance Area!</li>
     </ul>
   </div>
@@ -223,12 +222,12 @@
       highlightProgram();
     }
 
-        function highlightProgram() {
+    function highlightProgram() {
       const now = new Date();
       const hour = now.getHours();
       const items = document.querySelectorAll("#programOorkonde li");
 
-      items.forEach(li => {
+            items.forEach(li => {
         const start = parseInt(li.dataset.start, 10);
         const end = parseInt(li.dataset.end, 10);
 
@@ -249,22 +248,28 @@
       updateImage();
       highlightProgram();
     });
+
     setInterval(() => {
       updateImage();
       highlightProgram();
     }, 60000); // update every minute
   </script>
 
-<script>
-    // --- Analog clock ---
+  <script>
+    // --- Analog clock (robust transform-safe version) ---
     const canvas = document.getElementById("clock");
     const ctx = canvas.getContext("2d");
     const radius = canvas.width / 2;
-    ctx.translate(radius, radius);
 
     function drawClock() {
-      ctx.clearRect(-radius, -radius, canvas.width, canvas.height);
+      // Reset transform and clear full canvas
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+      // Translate to center for this frame
+      ctx.translate(radius, radius);
+
+      // Face
       ctx.beginPath();
       ctx.arc(0, 0, radius - 2, 0, 2 * Math.PI);
       ctx.fillStyle = "#111";
@@ -273,53 +278,66 @@
       ctx.lineWidth = 2;
       ctx.stroke();
 
+      // Numbers
       ctx.fillStyle = "#0ff";
       ctx.font = `${radius * 0.25}px Arial`;
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
+
+      ctx.save();
       for (let num = 1; num <= 12; num++) {
-        let angle = (num * Math.PI) / 6;
+        const angle = (num * Math.PI) / 6;
         ctx.rotate(angle);
         ctx.translate(0, -radius * 0.75);
         ctx.rotate(-angle);
-        ctx.fillText(num.toString(), 0, 0);
+        ctx.fillText(String(num), 0, 0);
+        // undo local transforms
         ctx.rotate(angle);
         ctx.translate(0, radius * 0.75);
         ctx.rotate(-angle);
       }
+      ctx.restore();
 
+      // Hands
       const now = new Date();
-      let hour = now.getHours() % 12;
-      let minute = now.getMinutes();
-      let second = now.getSeconds();
+      const hour = now.getHours() % 12;
+      const minute = now.getMinutes();
+      const second = now.getSeconds();
 
       drawHand((hour + minute / 60) * Math.PI / 6, radius * 0.5, 3, "#f0f");
       drawHand((minute + second / 60) * Math.PI / 30, radius * 0.7, 2, "#0f0");
       drawHand(second * Math.PI / 30, radius * 0.85, 1, "#ff0");
+
+      // Reset transform at end of frame (optional safety)
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
     }
 
     function drawHand(angle, length, width, color) {
+      ctx.save();
       ctx.beginPath();
       ctx.lineWidth = width;
       ctx.lineCap = "round";
       ctx.strokeStyle = color;
-      ctx.moveTo(0, 0);
       ctx.rotate(angle);
+      ctx.moveTo(0, 0);
       ctx.lineTo(0, -length);
       ctx.stroke();
-      ctx.rotate(-angle);
+      ctx.restore();
     }
 
     function updateClock() {
       drawClock();
       requestAnimationFrame(updateClock);
     }
-    updateClock();
+
+    // Start after DOM is ready (extra safety)
+    if (document.readyState === "loading") {
+      document.addEventListener("DOMContentLoaded", updateClock);
+    } else {
+      updateClock();
+    }
   </script>
 
 </body>
 </html>
-
-
-
 
