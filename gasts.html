@@ -392,8 +392,51 @@
     }
   </script>
 
+<script>
+
+
+
+
+  function timeCheck(){
+  const now = new Date();
+
+  // Hourly emphasis (visual only)
+  if(now.getSeconds()===0 && now.getMinutes()===0){
+    ejectHourStars(); // big ring burst
+    console.log("🕛 Hourly starburst fired!");
+  }
+}
+
+// Run every second
+setInterval(timeCheck,1000);
+
+function ejectHourStars(){
+  for(let i=0;i<12;i++){
+    const angle = (i * Math.PI) / 6; // 12 directions
+    stars.push({
+      x:0, y:0,
+      vx:Math.cos(angle)*1.5,
+      vy:Math.sin(angle)*1.5,
+      size:8,
+      color:"#0ff",
+      life:120
+    });
+  }
+}
+
+</script>
+
+
+
+
+
+
+
+
+
 </body>
 </html>
+
 
 
 
