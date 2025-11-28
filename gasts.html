@@ -118,7 +118,7 @@
 <img id="butto">
 
 <p id="timeMessage"></p>
-
+<br>
 
   <!-- Program Oorkonde -->
   <div id="programOorkonde">
@@ -445,13 +445,35 @@ img.src = 'images/Red-Button-Transparent.png';
 </script>
 
 
+<script>
+  const button = document.getElementById("butto");
+  const lamp = document.getElementById("kroonImage");
+  const djImage = document.getElementById("myImage");
+  const marquee = document.getElementById("marquee");
+
+  let override = false; // toggle state
+
+  button.addEventListener("click", () => {
+    override = !override; // flip state
+
+    if (override) {
+      // --- TURN EVERYTHING OFF ---
+      lamp.src = "images/on air.png";
+      djImage.src = "images/transparent.png";
+      marquee.classList.remove("visible");
+    } else {
+      // --- RESTORE NORMAL BEHAVIOR ---
+      updateImage(); // your existing function
+    }
+  });
+</script>
+
 
 
 
 
 </body>
 </html>
-
 
 
 
