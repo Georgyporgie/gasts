@@ -134,12 +134,16 @@
   </div>
 
   <script>
-    async function updateImage() {
-      const timeMessage = document.getElementById("timeMessage");
-      const img = document.getElementById("myImage");
-      const kroon = document.getElementById("kroonImage");
-      const marquee = document.getElementById("marquee");
-      const marqueeSpan = marquee.querySelector("span");
+async function updateImage() {
+
+  if (override) return; // stop schedule updates during manual override
+
+  const timeMessage = document.getElementById("timeMessage");
+  const img = document.getElementById("myImage");
+  const kroon = document.getElementById("kroonImage");
+  const marquee = document.getElementById("marquee");
+  const marqueeSpan = marquee.querySelector("span");
+
 
 
       
@@ -474,6 +478,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
