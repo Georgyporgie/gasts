@@ -9,7 +9,7 @@
   <style>
     /* --- Layout --- */
     body { margin:0; font-family:sans-serif; background:#111; color:#fff; }
-    #kroonImage, #myImage { display: block; max-width: 100%; }
+    #kroonImage, #myImage #butto { display: block; max-width: 100%; }
 
     .blink { animation: blink 1s step-start infinite; }
     @keyframes blink { 50% { opacity: 0; } }
@@ -112,9 +112,13 @@
     <canvas id="clock" width="80" height="80"></canvas>
   </div>
 
-  <br><br><br><br>
+  <br><br><br>
   <img id="myImage">
-  <p id="timeMessage"></p>
+      <br>
+<img id="butto">
+
+<p id="timeMessage"></p>
+<br>
 
   <!-- Program Oorkonde -->
   <div id="programOorkonde">
@@ -137,7 +141,10 @@
       const marquee = document.getElementById("marquee");
       const marqueeSpan = marquee.querySelector("span");
 
-      const now = new Date();
+
+      
+
+const now = new Date();
       const hour = now.getHours();
       const day = now.getDay();
 
@@ -209,7 +216,7 @@
       }
 
       // --- ON AIR lamp ---
-      kroon.src = djActive ? "images/on air.gif" : "images/on_air.png";
+      kroon.src = djActive ? "images/on air.gif" : "images/on air.png";
 
       // --- Fade marquee in/out ---
       if (djActive) {
@@ -429,6 +436,14 @@ function ejectHourStars(){
 
 
 
+<script>
+//Get our img element by using document.getElementById
+var img = document.getElementById("butto");
+
+//Set the src property of our element to the new image URL
+img.src = 'images/Red-Button-Transparent.png';
+</script>
+
 
 
 
@@ -436,7 +451,6 @@ function ejectHourStars(){
 
 </body>
 </html>
-
 
 
 
