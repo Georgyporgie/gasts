@@ -116,7 +116,31 @@
     </ul>
   </div>
 
-<script>
+  <script>
+  
+  function highlightProgram() {
+  const now = new Date();
+  const hour = now.getHours(); // 0–23
+  const items = document.querySelectorAll("#programOorkonde li");
+
+  items.forEach(li => {
+    const start = Number(li.dataset.start);
+    const end = Number(li.dataset.end);
+
+    let active = false;
+    if (start < end) {
+      // normal range (e.g. 12–14)
+      active = hour >= start && hour < end;
+    } else {
+      // overnight range (e.g. 23–3)
+      active = (hour >= start || hour < end);
+    }
+
+    li.classList.toggle("active", active);
+  });
+}
+
+
 async function updateImage() {
   const img = document.getElementById("myImage");
   const kroon = document.getElementById("kroonImage");
@@ -430,6 +454,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
