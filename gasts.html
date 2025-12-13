@@ -246,6 +246,36 @@
     highlightProgram();
     updateImage();
   }, 60000);
+
+async function updateImage() {
+  const img = document.getElementById("myImage");
+  const kroon = document.getElementById("kroonImage");
+  const marquee = document.getElementById("marquee");
+  const marqueeSpan = marquee.querySelector("span");
+  const timeMessage = document.getElementById("timeMessage");
+
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.getDay();
+
+  // --- fetch today’s sunset for Amsterdam ---
+  let sunset;
+  try {
+    const response = await fetch("https://api.sunrise-sunset.org/json?lat=52.37&lng=4.89&formatted=0");
+    const data = await response.json();
+    sunset = new Date(data.results.sunset);
+
+    // add 30 minutes buffer for twilight
+    sunset = new Date(sunset.getTime() + 30 * 60000);
+  } catch (err) {
+    console.warn("⚠️ Could not fetch sunset, fallback to 18:30");
+    sunset = new Date();
+    sunset.setHours(18,30,0);
+  }
+
+
+
+
 </script>
 
 
@@ -461,6 +491,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
