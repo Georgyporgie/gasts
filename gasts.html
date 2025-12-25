@@ -161,13 +161,15 @@
 
     const programList = document.getElementById("programList");
     programList.innerHTML = "";
-    program.forEach(slot => {
-      const li = document.createElement("li");
-      li.dataset.start = slot.start;
-      li.dataset.end = slot.end;
-      li.innerHTML = `<strong>${slot.start}:00 – ${slot.end}:00</strong>: ${slot.text}`;
-      programList.appendChild(li);
-    });
+    program.forEach((slot, index) => {
+  const li = document.createElement("li");
+  li.dataset.start = slot.start;
+  li.dataset.end = slot.end;
+  li.classList.add(`slot-${index}`);
+  li.innerHTML = `<strong>${slot.start}:00 – ${slot.end}:00</strong>: ${slot.text}`;
+  programList.appendChild(li);
+});
+
   }
 
   function highlightProgram() {
@@ -509,6 +511,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
