@@ -109,6 +109,22 @@
   </div>
 
 <script>
+ 
+  
+  window.addEventListener("load", () => {
+  const day = new Date().getDay(); // 0=Sun, 6=Sat
+  if (day === 0 || day === 6) {
+    document.body.classList.add("weekend");
+  } else {
+    document.body.classList.add("weekday");
+  }
+});
+
+  
+  
+  
+  
+  
   // --- DanceRadio Programs ---
   const weekdayProgram = [
     { start:4, end:12, text:"Latest Disco hits Of The Eighties" },
@@ -510,6 +526,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
