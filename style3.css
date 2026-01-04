@@ -83,7 +83,7 @@
 
 
 #kroonImage {
-  height: 30px;
+  height: 30px;  filter:brightness(105%) saturation(105%) contrast(105%);
   width: auto;
 }
 
@@ -127,6 +127,7 @@ body.weekday #programOorkonde li.active {
   font-weight: bold;
   text-shadow: 0 0 10px rgba(255,140,0,0.8);
 }
+
 
 
 
