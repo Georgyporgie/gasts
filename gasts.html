@@ -183,95 +183,32 @@
 
   }
 
-  function highlightProgram() {
-    const now = new Date();
-    const hour = now.getHours();
-    const items = document.querySelectorAll("#programOorkonde li");
-    items.forEach(li => {
-      const start = Number(li.dataset.start);
-      const end = Number(li.dataset.end);
-      let active = false;
-      if (start < end) active = hour >= start && hour < end;
-      else active = (hour >= start || hour < end);
-      li.classList.toggle("active", active);
-    });
-  }
+if (isWeekend) {
+  if (hour >= 14 && hour < 16) {
+    img.src = "images/DJ S.webm";
+    timeMessage.textContent = "";
+    djActive = true;
+    marqueeSpan.textContent = "DJ S is spinning the decks!";
+  } 
+  else if (hour >= 16 && hour < 23) {
+    img.src = "images/Lovely Miss Monique.webm";  // <— your video
+    timeMessage.textContent = "";
+    djActive = true;
 
-  async function updateImage() {
-    const img = document.getElementById("myImage");
-    const kroon = document.getElementById("kroonImage");
-    const marquee = document.getElementById("marquee");
-    const marqueeSpan = marquee.querySelector("span");
-    const timeMessage = document.getElementById("timeMessage");
-
-    const now = new Date();
-    const hour = now.getHours();
-    const day = now.getDay();
-
-    // --- fetch today’s sunset for Amsterdam (local time) ---
-    let sunset;
-    try {
-      const response = await fetch("https://api.sunrise-sunset.org/json?lat=52.37&lng=4.89&formatted=1");
-      const data = await response.json();
-      sunset = new Date(data.results.sunset);
-      // add 30 minutes buffer for twilight
-      sunset = new Date(sunset.getTime() + 30 * 60000);
-        } catch (err) {
-      console.warn("⚠️ Could not fetch sunset, fallback to 18:30");
-      sunset = new Date();
-      sunset.setHours(18,30,0);
-    }
-
-    let djActive = false;
-    const isWeekend = (day === 5 && hour >= 18) || day === 6 || day === 0;
-
-    if (isWeekend) {
-      if (hour >= 14 && hour < 16) {
-        img.src = "images/transparent2.png";
-        timeMessage.textContent = "";
-        djActive = true;
-        marqueeSpan.textContent = "DJ S is spinning the decks!";
-      } else if (hour >= 16 && hour < 23) {
-        if (now < sunset) {
-          img.src = "images/transparent2.png";
-          timeMessage.textContent = "";
-          djActive = true;
-          marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
-        } else {
-          img.src = "images/transparent2.png";
-          timeMessage.textContent = "";
-          djActive = true;
-          marqueeSpan.textContent = "Dance Dance Dance!";
-        }
-      } else {
-        img.src = "images/transparent2.png";
-        timeMessage.textContent = "";
-        djActive = false;
-        marqueeSpan.textContent = "";
-      }
+    if (now < sunset) {
+      marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
     } else {
-      if (hour >= 7 && hour < 12) {
-        img.src = "images/transparent2.png";
-        timeMessage.textContent = "Good morning!";
-        djActive = false;
-        marqueeSpan.textContent = "";
-      } else if (hour >= 12 && hour < 17) {
-        img.src = "images/transparent.png";
-        timeMessage.textContent = "";
-        djActive = false;
-        marqueeSpan.textContent = "";
-      } else if (hour >= 17 && hour < 23) {
-        img.src = "images/aquarium.png";
-        timeMessage.textContent = "";
-        djActive = true;
-        marqueeSpan.textContent = "";
-      } else {
-        img.src = "images/transparent2.png";
-        timeMessage.textContent = "";
-        djActive = false;
-        marqueeSpan.textContent = "";
-      }
+      marqueeSpan.textContent = "Dance Dance Dance!";
     }
+  } 
+  else {
+    img.src = "images/aquarium3.webm";
+    timeMessage.textContent = "";
+    djActive = false;
+    marqueeSpan.textContent = "";
+  }
+}
+
 
     // --- ON AIR lamp ---
     kroon.src = djActive ? "images/on air.gif" : "images/on air.png";
@@ -522,6 +459,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
