@@ -109,134 +109,226 @@
   </div>
 
 <script>
- 
-  
-  window.addEventListener("load", () => {
-  const day = new Date().getDay(); // 0=Sun, 6=Sat
-  if (day === 0 || day === 6) {
-    document.body.classList.add("weekend");
-  } else {
-    document.body.classList.add("weekday");
-  }
-});
+(() => {
 
-  
-  
-  
-  
-  
-  // --- DanceRadio Programs ---
-  const weekdayProgram = [
-    { start:4,  end:14, text:"Latest Disco hits Of The Eighties" },
-    { start:14, end:16, text:"Special-show!" },
-    { start:16, end:19, text:"Latest Hits Of The Dance Area" },
-    { start:19, end:21, text:"Come See The Eighties Disco!" },
-    { start:21, end:23, text:"Dance Yourself Dizzy!" },
-    { start:23, end:3, text:"Dance Dance Dance!!" }
-  ];
-
-  const fridayProgram = [
-    { start:4, end:14, text:"Friday Disco Morning" },
-    { start:14, end:16, text:"Friday Special-show!" },
-    { start:16, end:19, text:"Dance Area Beats" },
-    { start:19, end:21, text:" Eighties Disco!" },
-    { start:21, end:23, text:"Dance Yourself Dizzy!" },
-    { start:23, end:3, text:" Night Dance Dance!!" }
-  ];
-
-  const saturdayProgram = [
-    { start:4, end:14, text:"Morning Vibes" },
-    { start:14, end:16, text:"Sonny Fodera Mixin'" },
-    { start:16, end:19, text:"The Dance Area Beats" },
-    { start:19, end:21, text:"Saturday Eighties Disco!" },
-    { start:21, end:23, text:"Dance Dance Dance!" },
-    { start:23, end:3, text:" Night Dancin'" }
-  ];
-
-  const sundayProgram = [
-    { start:4, end:14, text:"  Morning Disco" },
-    { start:14, end:16, text:"Strictly Eighties Show!" },
-    { start:16, end:19, text:" Dance Area Beats" },
-    { start:19, end:21, text:"Eighties Disco!" },
-    { start:21, end:23, text:"Sunday Dance Yourself Dizzy!" },
-    { start:23, end:3, text:"Night Dance Dance!!" }
-  ];
-  function renderProgram() {
-    const today = new Date();
-    const day = today.getDay();
-    let program;
-    if (day === 5) program = fridayProgram;
-    else if (day === 6) program = saturdayProgram;
-    else if (day === 0) program = sundayProgram;
-    else program = weekdayProgram;
-
-    const programList = document.getElementById("programList");
-    programList.innerHTML = "";
-    program.forEach((slot, index) => {
-  const li = document.createElement("li");
-  li.dataset.start = slot.start;
-  li.dataset.end = slot.end;
-  li.classList.add(`slot-${index}`);
-  li.innerHTML = `<strong>${slot.start}:00 – ${slot.end}:00</strong>: ${slot.text}`;
-  programList.appendChild(li);
-});
-
-  }
-
-if (isWeekend) {
-  if (hour >= 14 && hour < 16) {
-    img.src = "images/DJ S.webm";
-    timeMessage.textContent = "";
-    djActive = true;
-    marqueeSpan.textContent = "DJ S is spinning the decks!";
-  } 
-  else if (hour >= 16 && hour < 23) {
-    img.src = "images/Lovely Miss Monique.webm";  // <— your video
-    timeMessage.textContent = "";
-    djActive = true;
-
-    if (now < sunset) {
-      marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
-    } else {
-      marqueeSpan.textContent = "Dance Dance Dance!";
-    }
-  } 
-  else {
-    img.src = "images/aquarium3.webm";
-    timeMessage.textContent = "";
-    djActive = false;
-    marqueeSpan.textContent = "";
-  }
-}
-
-
-    // --- ON AIR lamp ---
-    kroon.src = djActive ? "images/on air.gif" : "images/on air.png";
-
-    // --- Fade marquee in/out ---
-    if (djActive) {
-      marquee.classList.add("visible");
-    } else {
-      marquee.classList.remove("visible");
+  /* ---------------------------------------------------------
+   *  TIME MODULE
+   * --------------------------------------------------------- */
+  const TimeModule = (() => {
+    function now() {
+      return new Date();
     }
 
-    // --- Highlight current program ---
-    highlightProgram();
-  }
+    function hour() {
+      return now().getHours();
+    }
 
-  // Run everything on load and every minute
-  window.addEventListener("load", () => {
-    renderProgram();
-    highlightProgram();
-    updateImage();
-  });
+    function day() {
+      return now().getDay(); // 0=Sun, 6=Sat
+    }
 
-  setInterval(() => {
-    renderProgram();
-    highlightProgram();
-    updateImage();
-  }, 60000);
+    function isWeekend() {
+      const d = day();
+      return d === 0 || d === 6;
+    }
+
+    function sunsetTime() {
+      // Placeholder: 18:00
+      const s = new Date();
+      s.setHours(18, 0, 0, 0);
+      return s;
+    }
+
+    return { now, hour, day, isWeekend, sunsetTime };
+  })();
+
+
+
+  /* ---------------------------------------------------------
+   *  PROGRAM MODULE
+   * --------------------------------------------------------- */
+  const ProgramModule = (() => {
+
+    const weekdayProgram = [
+      { start:4,  end:14, text:"Latest Disco hits Of The Eighties" },
+      { start:14, end:16, text:"Special-show!" },
+      { start:16, end:19, text:"Latest Hits Of The Dance Area" },
+      { start:19, end:21, text:"Come See The Eighties Disco!" },
+      { start:21, end:23, text:"Dance Yourself Dizzy!" },
+      { start:23, end:3,  text:"Dance Dance Dance!!" }
+    ];
+
+    const fridayProgram = [
+      { start:4,  end:14, text:"Friday Disco Morning" },
+      { start:14, end:16, text:"Friday Special-show!" },
+      { start:16, end:19, text:"Dance Area Beats" },
+      { start:19, end:21, text:"Eighties Disco!" },
+      { start:21, end:23, text:"Dance Yourself Dizzy!" },
+      { start:23, end:3,  text:"Night Dance Dance!!" }
+    ];
+
+    const saturdayProgram = [
+      { start:4,  end:14, text:"Morning Vibes" },
+      { start:14, end:16, text:"Sonny Fodera Mixin'" },
+      { start:16, end:19, text:"The Dance Area Beats" },
+      { start:19, end:21, text:"Saturday Eighties Disco!" },
+      { start:21, end:23, text:"Dance Dance Dance!" },
+      { start:23, end:3,  text:"Night Dancin'" }
+    ];
+
+    const sundayProgram = [
+      { start:4,  end:14, text:"Morning Disco" },
+      { start:14, end:16, text:"Strictly Eighties Show!" },
+      { start:16, end:19, text:"Dance Area Beats" },
+      { start:19, end:21, text:"Eighties Disco!" },
+      { start:21, end:23, text:"Sunday Dance Yourself Dizzy!" },
+      { start:23, end:3,  text:"Night Dance Dance!!" }
+    ];
+
+    function getTodayProgram() {
+      const d = TimeModule.day();
+      if (d === 5) return fridayProgram;
+      if (d === 6) return saturdayProgram;
+      if (d === 0) return sundayProgram;
+      return weekdayProgram;
+    }
+
+    function render() {
+      const list = document.getElementById("programList");
+      list.innerHTML = "";
+
+      getTodayProgram().forEach((slot, i) => {
+        const li = document.createElement("li");
+        li.dataset.start = slot.start;
+        li.dataset.end = slot.end;
+        li.innerHTML = `<strong>${slot.start}:00 – ${slot.end}:00</strong>: ${slot.text}`;
+        list.appendChild(li);
+      });
+    }
+
+    function highlight() {
+      const hour = TimeModule.hour();
+      const items = document.querySelectorAll("#programList li");
+
+      items.forEach(li => {
+        const start = Number(li.dataset.start);
+        const end = Number(li.dataset.end);
+
+        const active =
+          (start < end && hour >= start && hour < end) ||
+          (start > end && (hour >= start || hour < end));
+
+        li.classList.toggle("active", active);
+      });
+    }
+
+    return { render, highlight };
+  })();
+
+
+
+  /* ---------------------------------------------------------
+   *  DJ MODULE
+   * --------------------------------------------------------- */
+  const DJModule = (() => {
+
+    function getDJState() {
+      const hour = TimeModule.hour();
+      const weekend = TimeModule.isWeekend();
+      const now = TimeModule.now();
+      const sunset = TimeModule.sunsetTime();
+
+      if (!weekend) {
+        return { active:false, img:"images/aquarium3.webm", text:"" };
+      }
+
+      if (hour >= 14 && hour < 16) {
+        return {
+          active:true,
+          img:"images/DJ S.webm",
+          text:"DJ S is spinning the decks!"
+        };
+      }
+
+      if (hour >= 16 && hour < 23) {
+        return {
+          active:true,
+          img:"images/Lovely Miss Monique.webm",
+          text: now < sunset
+            ? "Miss Monique warming up the sunset vibes!"
+            : "Dance Dance Dance!"
+        };
+      }
+
+      return {
+        active:false,
+        img:"images/aquarium3.webm",
+        text:""
+      };
+    }
+
+    return { getDJState };
+  })();
+
+
+
+  /* ---------------------------------------------------------
+   *  UI MODULE
+   * --------------------------------------------------------- */
+  const UIModule = (() => {
+
+    const img = document.getElementById("myImage");
+    const kroon = document.getElementById("kroonImage");
+    const marquee = document.getElementById("marquee");
+    const marqueeSpan = marquee.querySelector("span");
+    const timeMessage = document.getElementById("timeMessage");
+
+    function applyDJState(state) {
+      img.src = state.img;
+      marqueeSpan.textContent = state.text;
+      timeMessage.textContent = "";
+
+      kroon.src = state.active
+        ? "images/on air.gif"
+        : "images/on air.png";
+
+      marquee.classList.toggle("visible", state.active);
+    }
+
+    return { applyDJState };
+  })();
+
+
+
+  /* ---------------------------------------------------------
+   *  APP CONTROLLER
+   * --------------------------------------------------------- */
+  const App = (() => {
+
+    function update() {
+      ProgramModule.render();
+      ProgramModule.highlight();
+
+      const djState = DJModule.getDJState();
+      UIModule.applyDJState(djState);
+    }
+
+    function init() {
+      update();
+      setInterval(update, 60000);
+    }
+
+    return { init };
+  })();
+
+
+
+  // Start the booth
+  window.addEventListener("load", App.init);
+
+})();
 </script>
+
 
 
 
@@ -459,6 +551,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
