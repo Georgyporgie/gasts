@@ -198,18 +198,18 @@ const now = new Date();
 
 if (isWeekend) {
   if (hour >= 14 && hour < 16) {
-    showImage("images/DJ S.gif");
+    showVideo("images/DJ S.webm");
     timeMessage.textContent = "";
     djActive = true;
     marqueeSpan.textContent = "DJ S is spinning the decks!";
   } else if (hour >= 16 && hour < 23) {
     if (now < sunset) {
-      showImage("images/Miss Monique2.gif");
+     showVideo("images/Lovely Miss Monique.webm");
       timeMessage.textContent = "";
       djActive = true;
       marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
     } else {
-      showImage("images/Lovely Miss Monique.gif");
+     showVideo("images/Lovely Miss Monique.webm");
       timeMessage.textContent = "";
       djActive = true;
       marqueeSpan.textContent = "Voetjes van de vloer...";
@@ -222,7 +222,8 @@ if (isWeekend) {
   }
 } else {
   if (hour >= 7 && hour < 12) {
-    showVideo("images/aquarium3.webm");
+    showImage("images/transparent.png");
+
     timeMessage.textContent = "Good morning!";
     djActive = false;
     marqueeSpan.textContent = "";
@@ -505,6 +506,7 @@ img.src = 'images/Red-Button-Transparent.png';
 
 </body>
 </html>
+
 
 
 
