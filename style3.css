@@ -1,16 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Moonrocks&display=swap');
 
-#myImage  {    filter:brightness(100%) saturation(100%) contrast(100%) opacity(70%);width: 235px; height: 145px; margin-right: -105px; display: block; margin: auto auto auto auto ; border: solid #555555 3px; z-index: 0; border-radius: 50px;
+#myImage  {    filter:brightness(100%) saturation(100%) contrast(100%) opacity(75%);width: 235px; height: 145px; margin-right: -105px; display: block; margin: auto auto auto auto ; border: solid #555555 3px; z-index: 0; border-radius: 50px;
 
     
           }
-
-
-#myVideo  {    filter:brightness(100%) saturation(100%) contrast(100%) opacity(70%);width: 235px; height: 135px; margin-right: -105px; display: block; margin: auto auto auto auto ; border: solid #555555 3px; z-index: 0; border-radius: 50px;
-
-    
-          }
-
 
 #marquee {
   display: block;
@@ -85,7 +78,17 @@
 
 
 
-
+.top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* spreads items across full width */
+  gap: 10px;
+  padding: 8px 16px;
+  background: linear-gradient(to bottom, #5C4033, #4B3621);
+  border-bottom: 2px solid #2F1B0C;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.4);
+  color: #fff;
+}
 
 
 
@@ -98,14 +101,6 @@
   display: block;
 }
 
-
-
-
-#butto  {  width: 38px;
-display: block; margin: auto;
-height: 22px; z-index: -600;
-brightness(100%) saturate(100%) contrast(100%) opacity(55%);
-}
 
 
 
