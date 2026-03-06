@@ -6,7 +6,7 @@
           }
 
 
-#myVideo {    filter:brightness(100%) saturation(100%) contrast(100%) opacity(75%);width: 235px; height: 145px; margin-right: -105px; display: block; margin: auto auto auto auto ; border: solid #555555 3px; z-index: 0; border-radius: 50px;
+#myVideo {    filter:brightness(100%) saturation(100%) contrast(100%) opacity(75%);width: 235px; height: 134px; margin-right: -105px; display: block; margin: auto auto auto auto ; border: solid #555555 3px; z-index: 0; border-radius: 50px;
 
     
           }
@@ -111,6 +111,7 @@
 #clock {
   display: block;
 }
+
 
 
 
