@@ -287,43 +287,49 @@ const now = new Date();
       let djActive = false;
 
 if (isWeekend) {
-
-  // DJ S → 14:00–16:00
   if (hour >= 14 && hour < 16) {
     showVideo("images/DJ S.webm");
     timeMessage.textContent = "";
     djActive = true;
     marqueeSpan.textContent = "DJ S is spinning the decks!";
-  }
-
-  // Miss Monique (sunset) → 16:00 until sunset
-  else if (hour >= 16 && now < sunset) {
-    showVideo("images/MissMonique2.webm");
-    timeMessage.textContent = "";
-    djActive = true;
-    marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
-  }
-
-  // PAUSE BLOCK → 1 hour after sunset
-  else if (hour >= sunset.getHours() && hour < sunset.getHours() + 1) {
-    showVideo("images/transparent.png"); // or transparent image
-    timeMessage.textContent = "Taking a short break...";
+  } else if (hour >= 16 && hour < 23) {
+    if (now < sunset) {
+     showVideo("images/MissMonique2.webm");
+      timeMessage.textContent = "";
+      djActive = true;
+      marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
+    } else {
+     showVideo("images/Lovely Miss Monique.webm");
+      timeMessage.textContent = "";
+      djActive = true;
+      marqueeSpan.textContent = "Voetjes van de vloer...";
+    }
+  } else {
+    showVideo("images/aquarium3.webm");
+    timeMessage.textContent = "Good night!";
     djActive = false;
     marqueeSpan.textContent = "";
   }
+} else {
+  if (hour >= 7 && hour < 12) {
+    showImage("images/transparent.png");
 
-  // Miss Monique (night) → after pause until 23:00
-  else if (hour >= sunset.getHours() + 1 && hour < 23) {
-    showVideo("images/Lovely Miss Monique.webm");
+    timeMessage.textContent = "Good morning!";
+    djActive = false;
+    marqueeSpan.textContent = "";
+  } else if (hour >= 12 && hour < 17) {
+    showImage("images/transparent.png");
     timeMessage.textContent = "";
-    djActive = true;
-    marqueeSpan.textContent = "Voetjes van de vloer...";
-  }
-
-  // Night fallback
-  else {
-    showVideo("images/transparent.png");
-    timeMessage.textContent = "Good night!";
+    djActive = false;
+    marqueeSpan.textContent = "";
+  } else if (hour >= 17 && hour < 23) {
+    showImage("images/transparent.png");
+    timeMessage.textContent = "";
+    djActive = false;
+    marqueeSpan.textContent = "";
+  } else {
+    showVideo("images/aquarium3.webm");
+    timeMessage.textContent = "";
     djActive = false;
     marqueeSpan.textContent = "";
   }
