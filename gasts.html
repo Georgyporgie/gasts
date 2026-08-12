@@ -289,18 +289,18 @@ const now = new Date();
 if (isWeekend) {
   if (hour >= 14 && hour < 16) {
     showVideo("images/DJ S.webm");
-    timeMessage.textContent = "";
+    timeMessage.textContent = "Good afternoon!";
     djActive = true;
     marqueeSpan.textContent = "DJ S is spinning the decks!";
   } else if (hour >= 16 && hour < 23) {
     if (now < sunset) {
      showVideo("images/MissMonique2.webm");
-      timeMessage.textContent = "";
+      timeMessage.textContent = "Good evening!";
       djActive = true;
       marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
     } else {
      showVideo("images/Lovely Miss Monique.webm");
-      timeMessage.textContent = "";
+      timeMessage.textContent = "Good evening!";
       djActive = true;
       marqueeSpan.textContent = "Voetjes van de vloer...";
     }
