@@ -53,7 +53,7 @@
 
     #timeMessage {
       text-align:center;
-      font-size:20px;
+      font-size:15px;
       font-style:italic;
       font-weight:bold;
       text-decoration:underline #FF0026;
@@ -319,7 +319,7 @@ if (isWeekend) {
     marqueeSpan.textContent = "";
   } else if (hour >= 12 && hour < 17) {
     showImage("images/transparent.png");
-    timeMessage.textContent = "";
+    timeMessage.textContent = "Good Afternoon!";
     djActive = true;
     marqueeSpan.textContent = "";
   } else if (hour >= 17 && hour < 23) {
@@ -330,12 +330,12 @@ if (isWeekend) {
 
 
 
-    timeMessage.textContent = "";
+    timeMessage.textContent = "Good Evening!";
     djActive = true;
     marqueeSpan.textContent = "";
   } else {
     showVideo("images/aquarium3.webm");
-    timeMessage.textContent = "";
+    timeMessage.textContent = "Good Night!";
     djActive = false;
     marqueeSpan.textContent = "";
   }
