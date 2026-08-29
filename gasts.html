@@ -254,108 +254,120 @@ function showVideo(path) {
 
 
 async function updateImage() {
-      const timeMessage = document.getElementById("timeMessage");
-      
-      const kroon = document.getElementById("kroonImage");
-      const marquee = document.getElementById("marquee");
-      const marqueeSpan = marquee.querySelector("span");
+  const timeMessage = document.getElementById("timeMessage");
+  const kroon = document.getElementById("kroonImage");
+  const marquee = document.getElementById("marquee");
+  const marqueeSpan = marquee.querySelector("span");
 
+  const now = new Date();
+  const hour = now.getHours();
+  const day = now.getDay();
 
-      
+  let sunset;
+  try {
+    const response = await fetch("https://api.sunrise-sunset.org/json?lat=52.37&lng=4.89&formatted=0");
+    const data = await response.json();
+    sunset = new Date(data.results.sunset);
+  } catch {
+    sunset = new Date();
+    sunset.setHours(18,30,0);
+  }
 
-const now = new Date();
-      const hour = now.getHours();
-      const day = now.getDay();
+  const isWeekend =
+    (day === 6 || day === 0) ||
+    (day === 5 && hour >= 18) ||
+    (day === 0 && hour < 21);
 
-      // --- fetch today’s sunset for Amsterdam ---
-      let sunset;
-      try {
-        const response = await fetch("https://api.sunrise-sunset.org/json?lat=52.37&lng=4.89&formatted=0");
-        const data = await response.json();
-        sunset = new Date(data.results.sunset);
-      } catch (err) {
-        console.warn("⚠️ Could not fetch sunset, fallback to 18:30");
-        sunset = new Date();
-        sunset.setHours(18,30,0);
-      }
+  let djActive = false;
+  let realDjActive = false;   // ⭐ NEW FLAG
 
-      const isWeekend =
-        (day === 6 || day === 0) ||
-        (day === 5 && hour >= 18) ||
-        (day === 0 && hour < 21);
+  // --- WEEKEND DJ LOGIC ---
+  if (isWeekend) {
 
-      let djActive = false;
-
-if (isWeekend) {
-  if (hour >= 14 && hour < 16) {
-    showVideo("images/DJ S.webm");
-    timeMessage.textContent = "Good afternoon!";
-    djActive = true;
-    marqueeSpan.textContent = "DJ S is spinning the decks!";
-  } else if (hour >= 16 && hour < 23) {
-    if (now < sunset) {
-     showVideo("images/MissMonique2.webm");
+    if (hour >= 14 && hour < 16) {
+      showVideo("images/DJ S.webm");
       timeMessage.textContent = "Good afternoon!";
       djActive = true;
-      marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
-    } else {
-     showVideo("images/Lovely Miss Monique.webm");
+      realDjActive = true;   // ⭐ REAL DJ
+      marqueeSpan.textContent = "DJ S is spinning the decks!";
+    }
+
+    else if (hour >= 16 && hour < 23) {
+      if (now < sunset) {
+        showVideo("images/MissMonique2.webm");
+        timeMessage.textContent = "Good afternoon!";
+        djActive = true;
+        realDjActive = true;   // ⭐ REAL DJ
+        marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
+      } else {
+        showVideo("images/Lovely Miss Monique.webm");
+        timeMessage.textContent = "Good evening!";
+        djActive = true;
+        realDjActive = true;   // ⭐ REAL DJ
+        marqueeSpan.textContent = "Voetjes van de vloer...";
+      }
+    }
+
+    else {
+      showVideo("images/aquarium3.webm");
+      timeMessage.textContent = "Good night!";
+      djActive = false;
+      realDjActive = false;
+      marqueeSpan.textContent = "";
+    }
+  }
+
+  // --- WEEKDAY LOGIC ---
+  else {
+
+    if (hour >= 7 && hour < 12) {
+      showImage("images/transparent.png");
+      timeMessage.textContent = "Good morning!";
+      djActive = false;
+      realDjActive = false;
+      marqueeSpan.textContent = "";
+    }
+
+    else if (hour >= 12 && hour < 17) {
+      showImage("images/transparent.png");
+      timeMessage.textContent = "Good afternoon!";
+      djActive = true;
+      realDjActive = false;   // ⭐ NOT A REAL DJ
+      marqueeSpan.textContent = "";
+    }
+
+    else if (hour >= 17 && hour < 23) {
+      showImage("https://sunnyhotradio.com/images/Sunny DanceRadio444.png");
       timeMessage.textContent = "Good evening!";
       djActive = true;
-      marqueeSpan.textContent = "Voetjes van de vloer...";
+      realDjActive = false;   // ⭐ NOT A REAL DJ
+      marqueeSpan.textContent = "";
     }
-  } else {
-    showVideo("images/aquarium3.webm");
-    timeMessage.textContent = "Good night!";
-    djActive = false;
-    marqueeSpan.textContent = "";
+
+    else {
+      showVideo("images/aquarium3.webm");
+      timeMessage.textContent = "Good night!";
+      djActive = false;
+      realDjActive = false;
+      marqueeSpan.textContent = "";
+    }
   }
-} else {
-  if (hour >= 7 && hour < 12) {
-    showImage("images/transparent.png");
 
-    timeMessage.textContent = "Good morning!";
-    djActive = false;
-    marqueeSpan.textContent = "";
-  } else if (hour >= 12 && hour < 17) {
-    showImage("images/transparent.png");
-    timeMessage.textContent = "Good afternoon!";
-    djActive = true;
-    marqueeSpan.textContent = "";
-  } else if (hour >= 17 && hour < 23) {
-    showImage("https://sunnyhotradio.com/images/Sunny DanceRadio444.png");
-
-
-
-
-
-
-    timeMessage.textContent = "Good evening!";
-    djActive = true;
-    marqueeSpan.textContent = "";
+  // --- LAMP LOGIC ---
+  if (realDjActive) {
+    kroon.src = "images/live.gif";      // ⭐ REAL DJ → LIVE
+  } else if (djActive) {
+    kroon.src = "images/on air.gif";    // ⭐ FAKE DJ → ON AIR GIF
   } else {
-    showVideo("images/aquarium3.webm");
-    timeMessage.textContent = "Good night!";
-    djActive = false;
-    marqueeSpan.textContent = "";
+    kroon.src = "images/on air.png";    // ⭐ NO DJ → PNG
   }
+
+  // --- MARQUEE ---
+  marquee.classList.toggle("visible", realDjActive);
+
+  highlightProgram();
 }
 
-
-      
-      // --- ON AIR lamp ---
-      kroon.src = djActive ? "images/on air.gif" : "images/on air.png";
-
-      // --- Fade marquee in/out ---
-      if (djActive) {
-        marquee.classList.add("visible");
-      } else {
-        marquee.classList.remove("visible");
-      }
-
-      // --- Highlight current program ---
-      highlightProgram();
-    }
 
     function highlightProgram() {
       const now = new Date();

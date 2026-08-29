@@ -104,9 +104,11 @@
 
 
 #kroonImage {
-  height: 30px;
-  width: auto;
+  width: 140px;
+  height: 140px;
+  object-fit: contain;
 }
+
 
 #clock {
   display: block;
