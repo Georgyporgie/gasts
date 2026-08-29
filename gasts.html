@@ -354,13 +354,14 @@ async function updateImage() {
   }
 
   // --- LAMP LOGIC ---
-  if (realDjActive) {
-    kroon.src = "images/live.gif";      // ⭐ REAL DJ → LIVE
-  } else if (djActive) {
-    kroon.src = "images/on air.gif";    // ⭐ FAKE DJ → ON AIR GIF
-  } else {
-    kroon.src = "images/on air.png";    // ⭐ NO DJ → PNG
-  }
+ if (realDjActive) {
+  kroon.src = "images/live.gif";
+  kroon.classList.add("live-small");   // ⭐ add class
+} else {
+  kroon.classList.remove("live-small"); // ⭐ remove class
+  kroon.src = djActive ? "images/on air.gif" : "images/on air.png";
+}
+
 
   // --- MARQUEE ---
   marquee.classList.toggle("visible", realDjActive);

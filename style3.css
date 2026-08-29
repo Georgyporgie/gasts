@@ -103,11 +103,19 @@
 
 
 
+/* Default size for all lamps */
 #kroonImage {
   width: 140px;
   height: 140px;
   object-fit: contain;
 }
+
+/* Smaller size ONLY for live.gif */
+#kroonImage.live-small {
+  width: 110px;   /* ⭐ make live.gif smaller */
+  height: 110px;
+}
+
 
 
 #clock {
