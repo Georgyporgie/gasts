@@ -105,8 +105,8 @@
 
 /* Default size for all lamps */
 #kroonImage {
-  width: 140px;
-  height: 140px;
+  width: 80px;
+  height: 80px;
   object-fit: contain;
 }
 
