@@ -292,21 +292,46 @@ async function updateImage() {
       marqueeSpan.textContent = "DJ S is spinning the decks!";
     }
 
-    else if (hour >= 16 && hour < 23) {
-      if (now < sunset) {
-        showVideo("images/MissMonique2.webm");
-        timeMessage.textContent = "Good afternoon!";
-        djActive = true;
-        realDjActive = true;   // ⭐ REAL DJ
-        marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
-      } else {
-        showVideo("images/Lovely Miss Monique.webm");
-        timeMessage.textContent = "Good evening!";
-        djActive = true;
-        realDjActive = true;   // ⭐ REAL DJ
-        marqueeSpan.textContent = "Voetjes van de vloer...";
-      }
-    }
+else if (hour >= 16 && hour < 23) {
+  // DEBUG: see what times we’re comparing
+  console.log("now:", now.toISOString());
+  console.log("sunset (API UTC):", sunset.toISOString());
+
+  // 20 minutes after sunset
+  const sunsetPlus20 = new Date(sunset.getTime() + 20 * 60000);
+  console.log("sunsetPlus20:", sunsetPlus20.toISOString());
+
+  // BEFORE SUNSET → Miss Monique sunset warm-up
+  if (now < sunset) {
+    console.log("Phase: BEFORE SUNSET → MissMonique2.webm");
+    showVideo("images/MissMonique2.webm");
+    timeMessage.textContent = "Good afternoon!";
+    djActive = true;
+    realDjActive = true;
+    marqueeSpan.textContent = "Miss Monique warming up the sunset vibes!";
+  }
+
+  // 20-MINUTE BREAK AFTER SUNSET
+  else if (now >= sunset && now < sunsetPlus20) {
+    console.log("Phase: SUNSET BREAK → transparent.png");
+    showImage("images/transparent.png");
+    timeMessage.textContent = "Taking a short break...";
+    djActive = false;
+    realDjActive = false;
+    marqueeSpan.textContent = "";
+  }
+
+  // AFTER BREAK → Lovely Miss Monique night mode
+  else {
+    console.log("Phase: AFTER BREAK → Lovely Miss Monique.webm");
+    showVideo("images/Lovely Miss Monique.webm");
+    timeMessage.textContent = "Good evening!";
+    djActive = true;
+    realDjActive = true;
+    marqueeSpan.textContent = "Voetjes van de vloer...";
+  }
+}
+
 
     else {
       showVideo("images/aquarium3.webm");
