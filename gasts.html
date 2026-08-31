@@ -284,7 +284,21 @@ async function updateImage() {
   // --- WEEKEND DJ LOGIC ---
   if (isWeekend) {
 
-    if (hour >= 14 && hour < 16) {
+
+
+    if (hour >= 8 && hour < 14) {
+      showImage("images/transparent.png");
+      timeMessage.textContent = "Good morning!";
+      djActive = false;
+      realDjActive = false;   // ⭐ REAL DJ
+      marqueeSpan.textContent = "";
+    }
+
+
+
+
+
+  else if (hour >= 14 && hour < 16) {
       showVideo("images/DJ S.webm");
       timeMessage.textContent = "Good afternoon!";
       djActive = true;
