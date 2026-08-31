@@ -22,6 +22,7 @@
   margin: auto;
   overflow: hidden;
   white-space: nowrap;
+will-change: transform;
 }
 
 #marquee span {
@@ -29,7 +30,7 @@
   font-family: 'Rubik Moonrocks', cursive;
   font-size: 18px;
   color: #FFD700;
-  animation: marquee 8s linear infinite;
+  animation: marquee 6s linear infinite;
   text-shadow: 2px 2px 4px #ff69b4;
   background: linear-gradient(to right, #ff8c00, #ff69b4);
   -webkit-background-clip: text;
