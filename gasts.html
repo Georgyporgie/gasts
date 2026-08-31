@@ -253,7 +253,7 @@ function showVideo(path) {
 
 
 
-async function updateImage() {
+ async function updateImage() {
   const timeMessage = document.getElementById("timeMessage");
   const kroon = document.getElementById("kroonImage");
   const marquee = document.getElementById("marquee");
@@ -342,22 +342,9 @@ else if (hour >= 16 && hour < 23) {
     }
   }
 
-// --- WEEKDAY LOGIC ---
-else {
+  // --- WEEKDAY LOGIC ---
+  else {
 
-    // ⭐ MONDAY OVERRIDE ⭐
-    if (day === 1) {   // Monday
-        showImage("images/transparent.png");
-        timeMessage.textContent = "Good day!";
-        djActive = false;
-        realDjActive = false;
-        marqueeSpan.textContent = "";
-        // Monday is ALWAYS transparent + DJ off → stop here
-        highlightProgram();
-        return;
-    }
-
-    // ⭐ NORMAL WEEKDAY LOGIC (Tue–Fri) ⭐
     if (hour >= 7 && hour < 12) {
       showImage("images/transparent.png");
       timeMessage.textContent = "Good morning!";
@@ -369,8 +356,8 @@ else {
     else if (hour >= 12 && hour < 17) {
       showImage("images/transparent.png");
       timeMessage.textContent = "Good afternoon!";
-      djActive = true;
-      realDjActive = false;
+      djActive = false;
+      realDjActive = false;   // ⭐ NOT A REAL DJ
       marqueeSpan.textContent = "";
     }
 
@@ -378,7 +365,7 @@ else {
       showImage("https://sunnyhotradio.com/images/Sunny DanceRadio444.png");
       timeMessage.textContent = "Good evening!";
       djActive = true;
-      realDjActive = false;
+      realDjActive = false;   // ⭐ NOT A REAL DJ
       marqueeSpan.textContent = "";
     }
 
@@ -389,8 +376,7 @@ else {
       realDjActive = false;
       marqueeSpan.textContent = "";
     }
-}
-
+  }
 
   // --- LAMP LOGIC ---
  if (realDjActive) {
@@ -407,6 +393,7 @@ else {
 
   highlightProgram();
 }
+
 
 
     function highlightProgram() {
