@@ -284,21 +284,7 @@ async function updateImage() {
   // --- WEEKEND DJ LOGIC ---
   if (isWeekend) {
 
-
-
-    if (hour >= 8 && hour < 14) {
-      showImage("images/transparent.png");
-      timeMessage.textContent = "Good morning!";
-      djActive = false;
-      realDjActive = false;   // ⭐ REAL DJ
-      marqueeSpan.textContent = "";
-    }
-
-
-
-
-
-  else if (hour >= 14 && hour < 16) {
+    if (hour >= 14 && hour < 16) {
       showVideo("images/DJ S.webm");
       timeMessage.textContent = "Good afternoon!";
       djActive = true;
@@ -356,9 +342,22 @@ else if (hour >= 16 && hour < 23) {
     }
   }
 
-  // --- WEEKDAY LOGIC ---
-  else {
+// --- WEEKDAY LOGIC ---
+else {
 
+    // ⭐ MONDAY OVERRIDE ⭐
+    if (day === 1) {   // Monday
+        showImage("images/transparent.png");
+        timeMessage.textContent = "Good day!";
+        djActive = false;
+        realDjActive = false;
+        marqueeSpan.textContent = "";
+        // Monday is ALWAYS transparent + DJ off → stop here
+        highlightProgram();
+        return;
+    }
+
+    // ⭐ NORMAL WEEKDAY LOGIC (Tue–Fri) ⭐
     if (hour >= 7 && hour < 12) {
       showImage("images/transparent.png");
       timeMessage.textContent = "Good morning!";
@@ -371,7 +370,7 @@ else if (hour >= 16 && hour < 23) {
       showImage("images/transparent.png");
       timeMessage.textContent = "Good afternoon!";
       djActive = true;
-      realDjActive = false;   // ⭐ NOT A REAL DJ
+      realDjActive = false;
       marqueeSpan.textContent = "";
     }
 
@@ -379,7 +378,7 @@ else if (hour >= 16 && hour < 23) {
       showImage("https://sunnyhotradio.com/images/Sunny DanceRadio444.png");
       timeMessage.textContent = "Good evening!";
       djActive = true;
-      realDjActive = false;   // ⭐ NOT A REAL DJ
+      realDjActive = false;
       marqueeSpan.textContent = "";
     }
 
@@ -390,7 +389,8 @@ else if (hour >= 16 && hour < 23) {
       realDjActive = false;
       marqueeSpan.textContent = "";
     }
-  }
+}
+
 
   // --- LAMP LOGIC ---
  if (realDjActive) {
